@@ -1,0 +1,37 @@
+1.
+public er nothæft frá hvaðan sem er, öðrum klössum og objects.
+private er nothæft bara í sínum eiginn klassa
+protected er nothæft bara í parent og dauther klössum, allir klassar sem koma frá parent.
+2. inheritance er þegar klassar tengjast saman t.d þessi  kóði frá php.net 
+<?php
+
+class Foo
+{
+    public function printItem($string)
+    {
+        echo 'Foo: ' . $string . PHP_EOL;
+    }
+    
+    public function printPHP()
+    {
+        echo 'PHP is great.' . PHP_EOL;
+    }
+}
+
+class Bar extends Foo
+{
+    public function printItem($string)
+    {
+        echo 'Bar: ' . $string . PHP_EOL;
+    }
+}
+
+$foo = new Foo();
+$bar = new Bar();
+$foo->printItem('baz'); // Output: 'Foo: baz'
+$foo->printPHP();       // Output: 'PHP is great' 
+$bar->printItem('baz'); // Output: 'Bar: baz'
+$bar->printPHP();       // Output: 'PHP is great'
+
+?>
+3.Namespace geymir öll heiti saman í pakka, svo við myndum ekki óvart kalla hluti sama nafni.
