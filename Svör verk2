@@ -35,3 +35,27 @@ $bar->printPHP();       // Output: 'PHP is great'
 
 ?>
 3.Namespace geymir öll heiti saman í pakka, svo við myndum ekki óvart kalla hluti sama nafni.
+4.þegar við viljum tengja marga hluti saman og til að einfalda kóða. t.d
+án OO
+function drive($the_car){
+
+    switch($the_car){
+
+      case 'ferrari':
+          $all_cars->run_ferrari_code();
+          break;
+
+      case 'mazerati':
+          $all_cars->run_mazerati_code();
+          break;
+
+      case 'bentley':
+          $all_cars->run_bentley_code();
+          break;
+    }
+}
+með OO
+function drive($the_car){
+
+    $the_car->drive();
+}
