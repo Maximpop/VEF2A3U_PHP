@@ -1,13 +1,12 @@
 <meta charset="UTF-8"> 
 
 <?php
-include "dbcon.php";  
-
+include "includes/dbcon.php";  
+include "includes/session.php"; 
 $name = $_POST['name']; 	
 $email = $_POST['email'];
 $password = $_POST['password']; 	 		
 
-//er hérna að athuga hvort breyturnar séu ekki tómar
 if(!empty($name) && !empty($email) && !empty($password)) 
 {
 
@@ -31,4 +30,5 @@ if(!empty($name) && !empty($email) && !empty($password))
 	}
 
 }
+header("location: login.php");
 ?>

@@ -1,25 +1,34 @@
 <meta charset="UTF-8">
 
 <?php
-include "dbcon.php"; 
+include "includes/dbcon.php";
+include "includes/session.php";
 
 $email = $_POST["email"];
-$pass = $_POST["password"]; 
-echo $email;
-echo $pass;
-echo "Hello";
+$pass = $_POST["password"];
+$result = "ok";
+
 try {
-echo "Hello2";
-$sql ='SELECT Name, Password FROM user WHERE Email = "' + $email + '"';
-$result = $pdo->query($sql);
+    $sql ="SELECT Name , Password FROM user WHERE Email = :email";
+    $query = $pdo->prepare($sql);
+    $param = array(':email' => $email);
+    $query->execute($param);
+    $res = $query->fetch();
 } catch (Exception $e) {
-		echo "Ekki tókst að ná í gögnin". "<br>" . $e->getMessage();
+    echo "Ekki tókst að ná í gögnin". "<br>" . $e->getMessage();
 }
-if ($result['Password'] == $pass) {
-	session_start();
-
-	$_SESSION['name'] = $name;
-
+$info = array($res);
+if ($info[0]['Password'] == $pass) {
+	echo "Winning";
+	$_SESSION['name'] = $info[0]['Name'];
+	$_SESSION['email'] = $email;
 	header("location: admin.php");
-	}
+}
+else{
+	echo "Notendanafn eða lykilorð ekki rétt";
+}
+	
+
+
+
 ?>
