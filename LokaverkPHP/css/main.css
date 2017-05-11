@@ -16,3 +16,8 @@ list-style: None;
 margin-left: 20px;
 
 }
+.imgContainer {
+	border: 1px solid black;
+	margin: 5px;
+	float: left;
+}

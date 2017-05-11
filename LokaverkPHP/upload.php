@@ -7,6 +7,10 @@ $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 $Email = $_SESSION['email'];
+$fileName = $_FILES["fileToUpload"]["name"];
+$boom = explode(".", $fileName);
+$fileExt = $boom[1];
+
 // Check if image file is a actual image or fake image
 if(isset($_POST["submit"])) {
     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
@@ -41,12 +45,22 @@ if ($uploadOk == 0) {
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+        
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
 }
+include_once"includes/Resize.php";
+$target_file = "uploads/$fileName";
+$resized_file = "uploads/resized_$fileName";
+$wmax = 200;
+$hmax = 150;
+ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+
+
 $name = basename( $_FILES["fileToUpload"]["name"]);
 //insert all info into database
+if ($name != null) {
 $sql = "INSERT INTO uploads (UserEmail, imgName, size)
 VALUES (:email, :imgName ,'5')";
 
@@ -66,7 +80,10 @@ try{
 	catch (PDOException $ex){
 		echo 'Það tókst ekki að skrifa í gagnagrunn: '.$ex->getMessage();
 	}
-
+  }
+else {
+header("location: admin.php");
+}
 header("location: admin.php");
 ?>
 
