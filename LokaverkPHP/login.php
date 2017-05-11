@@ -4,7 +4,6 @@
   <head>
     <title>Login</title>
 	<link rel="stylesheet" type="text/css" href="CSS/main.css">
-
 <h1>Login</h1>
 <?php 
 include "includes/nav.php";

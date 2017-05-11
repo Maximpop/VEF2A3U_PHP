@@ -20,7 +20,7 @@ include "includes/nav.php";
     <div class="Login">
   <form action="upload.php" method="post" enctype="multipart/form-data">
     Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="file" name="fileToUpload" id="fileToUpload" required>
     <input type="submit" value="Upload Image" name="submit">
   </form>
     </div>
@@ -29,7 +29,7 @@ include "includes/nav.php";
 
 
 try {
-    $sql ="SELECT UserEmail , imgName FROM uploads WHERE UserEmail = '$email'";
+    $sql ="SELECT UserEmail , imgName, size FROM uploads WHERE UserEmail = '$email'";
     $query = $pdo->prepare($sql);
     $param = array($email);
     $query->execute($param);
@@ -39,7 +39,8 @@ catch (Exception $e) {
     echo "Ekki tókst að ná í gögnin". "<br>" . $e->getMessage();
 }
 $info = array($res);
-$uploads = "uploads/resized_";
+$uploads = "uploads/";
+$uploadsRe = "uploads/resize/resize_";
 
 ?>
 
@@ -47,12 +48,15 @@ $uploads = "uploads/resized_";
   <div class="mainCon">
   <?php
     $arrlenght = count($res);
-
     for ($i=0; $i < $arrlenght; $i++) { 
       $pic = $info[0][$i]["imgName"];
+      $size = $info[0][$i]["size"];
       echo '
       <div class="imgContainer">
-      <img src='.$uploads.$pic.'>
+      <p>Stærð '.$size.'Kb</p>
+      <a target="_blank" href="'.$uploads.$pic.'">
+      <img src='.$uploadsRe.$pic.'>
+      </a>
       </div>
       ';
     }

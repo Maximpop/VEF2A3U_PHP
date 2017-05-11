@@ -19,7 +19,7 @@
 				<input type="text" name="email" required ><br>
 
 				<label>Password: </label>
-				<input type="text" name="password" required ><br>
+				<input type="password" name="password" required ><br>
 
 				<input type="submit">
 			</form>

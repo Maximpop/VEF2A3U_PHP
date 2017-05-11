@@ -4,6 +4,8 @@ include "includes/session.php";
 
 $target_dir = "uploads/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+$fileSize = $_FILES["fileToUpload"]["size"];
+$fileSizeKb = $fileSize / 1024; 
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 $Email = $_SESSION['email'];
@@ -52,7 +54,7 @@ if ($uploadOk == 0) {
 }
 include_once"includes/Resize.php";
 $target_file = "uploads/$fileName";
-$resized_file = "uploads/resized_$fileName";
+$resized_file = "uploads/resize/resize_$fileName";
 $wmax = 200;
 $hmax = 150;
 ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
@@ -62,7 +64,7 @@ $name = basename( $_FILES["fileToUpload"]["name"]);
 //insert all info into database
 if ($name != null) {
 $sql = "INSERT INTO uploads (UserEmail, imgName, size)
-VALUES (:email, :imgName ,'5')";
+VALUES (:email, :imgName ,:size)";
 
 $q = $pdo->prepare($sql);
 
@@ -71,6 +73,8 @@ try{
 		
 		$q->bindValue('email',$Email);
 		$q->bindValue('imgName',$name);
+        $q->bindValue('size',$fileSizeKb);
+
 
 		$q->execute();  
 		echo "Það tókst að skrifa eftirfarandi upplýsingar í gagnagrunn<br>";

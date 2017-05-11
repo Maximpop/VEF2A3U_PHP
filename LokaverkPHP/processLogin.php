@@ -6,11 +6,11 @@ include "includes/session.php";
 
 $email = $_POST["email"];
 $pass = $_POST["password"];
-$passHash = md5($pass);
+$passHash = $pass;
 $result = "ok";
 
 try {
-    $sql ="SELECT Name , Password FROM user WHERE Email = :email";
+    $sql ="SELECT Name , Password, salt FROM user WHERE Email = :email";
     $query = $pdo->prepare($sql);
     $param = array(':email' => $email);
     $query->execute($param);
@@ -18,8 +18,12 @@ try {
 } catch (Exception $e) {
     echo "Ekki tókst að ná í gögnin". "<br>" . $e->getMessage();
 }
+
+
 $info = array($res);
-if ($info[0]['Password'] == $passHash) {
+$DB_salt = $info[0]['salt'];
+$attemptHash = hash('sha512', $passHash . $DB_salt);
+if ($info[0]['Password'] == $attemptHash) {
 	echo "Winning";
 	$_SESSION['name'] = $info[0]['Name'];
 	$_SESSION['email'] = $email;
@@ -27,9 +31,6 @@ if ($info[0]['Password'] == $passHash) {
 }
 else{
 	echo "Notendanafn eða lykilorð ekki rétt";
-}
 	
-
-
-
+}
 ?>
