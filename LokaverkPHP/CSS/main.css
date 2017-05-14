@@ -1,7 +1,9 @@
-.main{
-	
+body{
+	width:100%;
 }
-
+.mainCon{
+	width:70%;
+}
 .SignUp {
 	border: 1px solid black;
 	width: 20%;
@@ -19,5 +21,11 @@ margin-left: 20px;
 .imgContainer {
 	border: 1px solid black;
 	margin: 5px;
-	float: left;
+}
+.showImg{
+	position: absolute;
+	top:50%;
+	left:50%;
+	max-width: 50%;
+	transform: translate(-50%, -50%);
 }

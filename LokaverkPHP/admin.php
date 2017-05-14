@@ -6,6 +6,10 @@ include "includes/dbcon.php";
 <head>
 	<title>hello</title>
 	<link rel="stylesheet" type="text/css" href="CSS/main.css">
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
 </head>
 <?php 
 include "includes/nav.php";
@@ -54,13 +58,33 @@ $uploadsRe = "uploads/resize/resize_";
       echo '
       <div class="imgContainer">
       <p>Stærð '.$size.'Kb</p>
-      <a target="_blank" href="'.$uploads.$pic.'">
-      <img src='.$uploadsRe.$pic.'>
-      </a>
+      <img src='.$uploadsRe.$pic.' class="thumb">
+      <img src="'.$uploads.$pic.'" class="fullImg">      
       </div>
       ';
     }
   ?>
   </div>
 </body>
+<script type="text/javascript">
+  var hide = false;
+  $(".thumb").each(function(index, el) {
+    $(el).on('click', function(event) {
+      $(".showImg").removeClass('showImg').hide();
+      var thing = $(this).siblings('.fullImg').addClass('showImg').show();
+      console.log(thing);
+      hide = true;
+    });
+  });
+  $(".fullImg").on('click', function(event) {
+    if (hide == true) {
+       console.log("goner");
+       $(".showImg").removeClass('showImg').hide();
+       hide = false;
+    }
+  });
+  $(".fullImg").each(function(index, el) {
+    $(this).hide();
+  });
+</script>
 </html>
